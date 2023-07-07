@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // BioStitch
     // Create the File menu
-    fileMenu = menuBar()->addMenu(tr("File"));
+    fileMenu = menuBar()->addMenu(tr("Tools"));
 
     // Add the select images button to the File menu
     QAction *selectImagesAction = new QAction(QIcon(":/icons/open.png"), tr("Stitch Images"), this);
@@ -53,14 +53,14 @@ MainWindow::~MainWindow()
 }
 
 /**
- * This function displays errors messages in a modal.
+ * This function displays error and success messages in a modal.
  *
  * @author Kai Jun Zhuang
  * @param message The message to be displayed in the QMessageBox.
  */
 void MainWindow::showLogMessage(const QString& message)
 {
-    QMessageBox::information(this, tr("Log Message"), message);
+    QMessageBox::information(this, tr("Info"), message);
 }
 
 /**
@@ -280,10 +280,11 @@ void MainWindow::saveGoodImages()
         QPixmap pixmap = button->icon().pixmap(button->iconSize());
         if (!pixmap.save(filePath)) {
             qDebug() << "Failed to save image:" << filePath;
-            showLogMessage("Failed to save image.");
+            showLogMessage("Failed to save image: " + filePath);
             continue;
         }
     }
+    showLogMessage("Good images saved.");
 }
 
 /**
@@ -328,10 +329,11 @@ void MainWindow::saveBadImages()
         QPixmap pixmap = button->icon().pixmap(button->iconSize());
         if (!pixmap.save(filePath)) {
             qDebug() << "Failed to save image:" << filePath;
-            showLogMessage("Failed to save image.");
+            showLogMessage("Failed to save image: " + filePath);
             continue;
         }
     }
+    showLogMessage("Bad images saved.");
 }
 
 /**
@@ -442,6 +444,7 @@ void MainWindow::uploadRawFolder()
             stitchFolder(path, savePath, subfolder.replace(0, 2, "A"));
         }
     }
+    showLogMessage("Stitching complete.");
 }
 
 /**
@@ -492,6 +495,7 @@ void MainWindow::stitchFolder(QString folderPath, QString savePath, QString file
     stitchImages(ch3, savePath, fileName + "_CH3");
     stitchImages(ch4, savePath, fileName + "_CH4");
     stitchImages(overlay, savePath, fileName + "_Overlay");
+    showLogMessage("Stitched images for " + fileName + " saved to " + savePath);
 }
 
 /**

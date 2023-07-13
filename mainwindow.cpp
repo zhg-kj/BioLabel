@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     uploadButton = ui->uploadButton;
     saveGoodButton = ui->saveGoodButton;
     saveBadButton = ui->saveBadButton;
+    stitchButton = ui->stitchButton;
     QScrollArea *scrollArea = ui->scrollArea;
 
     // Set the grid layout as the widget inside the scroll area
@@ -30,21 +31,12 @@ MainWindow::MainWindow(QWidget *parent)
     scrollArea->setWidgetResizable(true);
     scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
-    connect(uploadButton, &QPushButton::clicked, this, &MainWindow::uploadFolder);
+    connect(uploadButton, &QToolButton::clicked, this, &MainWindow::uploadFolder);
     connect(saveGoodButton, &QPushButton::clicked, this, &MainWindow::saveGoodImages);
     connect(saveBadButton, &QPushButton::clicked, this, &MainWindow::saveBadImages);
     connect(ui->goodCheckBox, &QCheckBox::stateChanged, this, &MainWindow::viewGoodImages);
     connect(ui->badCheckBox, &QCheckBox::stateChanged, this, &MainWindow::viewBadImages);
-
-    // BioStitch
-    // Create the File menu
-    fileMenu = menuBar()->addMenu(tr("Tools"));
-
-    // Add the select images button to the File menu
-    QAction *selectImagesAction = new QAction(QIcon(":/icons/open.png"), tr("Stitch Images"), this);
-    selectImagesAction->setShortcut(QKeySequence::Open);
-    connect(selectImagesAction, &QAction::triggered, this, &MainWindow::uploadRawFolder);
-    fileMenu->addAction(selectImagesAction);
+    connect(stitchButton, &QToolButton::clicked, this, &MainWindow::uploadRawFolder);
 }
 
 MainWindow::~MainWindow()
@@ -148,6 +140,7 @@ void MainWindow::uploadFolder()
         button->setFlat(true);
         button->setAutoFillBackground(true);
         button->setProperty("imagePath", fileInfo.absoluteFilePath());
+        button->setCursor(Qt::PointingHandCursor);
 
         // Set the button's palette to red
         QPalette palette;

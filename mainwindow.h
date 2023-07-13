@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QGridLayout>
 #include <QPushButton>
+#include <QToolButton>
 #include <QListWidget>
 #include <QFileDialog>
 #include <QImage>
@@ -27,9 +28,10 @@ public:
 private:
     Ui::MainWindow *ui;
     QGridLayout *layout;
-    QPushButton *uploadButton;
+    QToolButton *uploadButton;
     QPushButton *saveGoodButton;
     QPushButton *saveBadButton;
+    QToolButton *stitchButton;
     QListWidget *imageList;
     QMenu *fileMenu;
     QStringList tifFiles;

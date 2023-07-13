@@ -1,0 +1,9 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource>
+        <file>add.png</file>
+    </qresource>
+    <qresource>
+        <file>stitches.png</file>
+    </qresource>
+</RCC>
